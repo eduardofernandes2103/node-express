@@ -1,7 +1,14 @@
+
 // Importando o express e atribuindo a uma constante
-const express = require('express');
+// const express = require('express');
 
 // Instanciando um app do express
+// const app = express();
+
+// index.js
+// Importando o express       
+import express from "express";
+// Instanciando um app do express 
 const app = express();
 
 // Chamando a função do app que vai escutar requisições em uma determinada porta

@@ -11,6 +11,9 @@ import express from "express";
 // Instanciando um app do express 
 const app = express();
 
+// para receber params pelo body precisamos adicionar um middleware
+app.use(express.json());
+
 // Chamando a função do app que vai escutar requisições em uma determinada porta
 app.listen(3000);
 
@@ -39,6 +42,11 @@ app.get('/resources', (req, res) => {
     res.json(queryParams);
 });
 
+// Recebendo parametros pelo body
+app.post('/resources', (req, res) => {
+    const data = req.body
+    res.json(data)
+});
 
 // app.post('/', (req, res) => {
 //     res.send('Hello World!')

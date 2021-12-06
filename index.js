@@ -16,7 +16,14 @@ app.listen(3000);
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    // headers
+    // res.set('Content-Type', 'text/plain');
+
+    // res.status = 201;
+    // res.json({message: "Hello World!"});
+
+    // Ou numa linha só
+    res.status(200).json({message: "Hello World!"});
 });
 
 

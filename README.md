@@ -61,7 +61,7 @@ Experimente alterar a porta em que a aplicação vai escutar, o método da requi
 
 Nesse conteúdo, vimos como instalar as ferramentas básicas, inicializar um projeto usando o framework express, colocar um app simples para rodar e criar rotas que respondem à diferentes métodos.
 
----------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
 
 # Configurando código para rodar Import/Export
 Atualizando código da aula anterior
@@ -122,3 +122,47 @@ Dica!
 Experimente exportar a nossa constante app para um arquivo server.js, só não esqueça de alterar a configuração do script no package.json.
 
 Nesse conteúdo, conhecemos o nodemon e o babel, tambem vimos como refatorar o código de require() para o uso de ES6 com import/export garantindo praticidade e performance no código, além de claro, deixa-lo mais atualizado e bem escrito.
+---------------------------------------------------------------------------------------------------------------------
+# Manipulando o objeto response
+Alterando o tipo do body:
+Já vimos como utilizar o método send() para enviar uma resposta simples.
+
+Quando estamos desenvolvendo APIs REST, normalmente vamos devolver as respostas às requisições no formato JSON. Para fazermos isso, podemos usar o método json() que consta no objeto recebido por parâmetro res:
+
+app.get('/', (req, res) => {
+    res.json({message: "Hello World!"});
+});
+Usamos aqui um objeto como exemplo, mas lembrando que poderia também ser um array.
+
+Alterando o código de status da resposta
+Podemos também alterar o código de status da resposta, da seguinte forma:
+
+app.post('/', (req, res) => {
+    res.status = 201;
+    res.json({message: "Resource created!"});
+
+    // Ou em uma só linha:
+    res.status(201).json({message: "Resource created!"});
+});
+Alteramos o status code padrão (200) pelo 201.
+
+Adicionando cabeçalhos (headers) à resposta
+Caso seja necessário adicionar algum header específico na resposta à uma requisição, podemos adicionar ou alterar passando sua chave e o valor:
+
+app.get('/', (req, res) => {
+
+    // Adicionando o header que define o tipo de conteúdo da resposta.
+    res.set('Content-Type', 'text/plain');
+    res.json({message: "Testando cabeçalhos."});
+});
+Dica!
+Apesar de ser possível inspecionar os cabeçalhos pelo navegador, é melhor utilizar um cliente como o Postman ou Insomnia.
+
+Caso deseje alterar mais de um cabeçalho:
+
+res.set({
+    'Content-Type': 'text/plain',
+    'Content-Length': '10000',
+});
+Nesse conteúdo, vimos como alterar os principais pontos de uma resposta http: tipo do body, status code e headers.
+----------------------------------------------------------------------------------------------------------------------

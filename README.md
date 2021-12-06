@@ -166,3 +166,75 @@ res.set({
 });
 Nesse conteúdo, vimos como alterar os principais pontos de uma resposta http: tipo do body, status code e headers.
 ----------------------------------------------------------------------------------------------------------------------
+
+# Manipulando o objeto request
+Recebendo parâmetros na URL (Route Params)
+Usados para identificar um recurso na nossa API REST, podemos receber variáveis na URL da seguinte forma:
+
+// index.js
+
+app.get('/resources/:resource_id/subitens/:item_id', (req, res) => {
+    const params = req.params
+    res.json(params)
+})
+As variáveis estarão contidas no objeto req.params. Estamos atribuindo à uma constante e depois retornando na própria rota somente para ficar fácil de visualizar como esse dado chega e acessá-lo como resposta da nossa requisição.
+
+Acesse a seguinte URL no navegador ou em um cliente HTTP para visualizar melhor: GET http://localhost:3000/resources/1/subitens/2
+
+A resposta será:
+
+{
+    "resource_id": "1",
+    "item_id": "2"
+}
+Ou seja, podemos utilizar cada parâmetro recebido pela url acessando suas chaves, assim:
+
+const resource_id = req.params.resource_id;
+console.log(resource_id);
+Ou usando desestruturação:
+
+const { resource_id } = req.params;
+console.log(resource_id);
+Recebendo parâmetros na URL (Query Params)
+Além das urls dinâmicas, temos os query parameters que podem ser recebidos pela url, para acessá-los o processo é semelhante ao visto anteriormente:
+
+// index.js
+app.get('/resources', (req, res) => {
+    const queryParams = req.query;
+    res.json(queryParams);
+});
+Ao fazer uma requisição passando alguns query parameters, como esta: GET http://localhost:3000/resources?order_by=asc&max_itens=100
+
+A resposta será:
+
+{
+    "order_by": "asc",
+    "max_itens": "100"
+}
+Importante!
+Os query parameters não precisam ser especificados, podem ser passados de modo livre pelo cliente e caso não sejam utilizados pelo backend são simplesmente ignorados.
+
+Recebendo parâmetros no body
+Para acessarmos os dados do corpo de uma requisição de forma mais fácil, vamos precisar adicionar um middleware em nossa aplicação. Em resumo, um middleware é algo que vai acontecer no meio do processo para todas as requisições, no nosso caso, queremos que os dados que chegam da requisição já estejam padronizados como JSON.
+
+Importante!
+Um pouco mais adiante vamos entender melhor o que é um middleware e como funcionam no Express.js.
+
+Para adicionar o middleware padrão de JSON do Express, precisamos passá-lo como parâmetro para o método use no nosso app, para que as requisições comecem a passar pelo middleware quando chegarem:
+
+// Instanciando um app do express
+import express from "express";
+const app = express();
+
+app.use(express.json());
+Agora, podemos tentar acessar o corpo da requisição no padrão json assim:
+
+// index.js
+app.post('/resources', (req, res) => {
+    const data = req.body
+    res.json(data)
+});
+Ao fazer uma requisição POST passando alguns dados, devemos receber os mesmos dados como resposta.
+
+Nesse conteúdo, vimos como acessar os principais tipos de dados que podem acompanhar uma requisição. Experimente testar diferentes possibilidades e combinações para adquirir experiência com os tópicos que vimos até aqui. Se esbarrar em algum problema, conte com o time de ensino!
+--------------------------------------------------------------------------------------------------

@@ -26,6 +26,19 @@ app.get('/', (req, res) => {
     res.status(200).json({message: "Hello World!"});
 });
 
+// MANIPULANDO O OBJETO REQUEST
+// route params
+app.get('/resources/:resource_id/subitens/:item_id', (req, res) => {
+    const params = req.params
+    res.json(params)
+})
+
+// Query params
+app.get('/resources', (req, res) => {
+    const queryParams = req.query;
+    res.json(queryParams);
+});
+
 
 // app.post('/', (req, res) => {
 //     res.send('Hello World!')
